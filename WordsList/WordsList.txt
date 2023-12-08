@@ -1,0 +1,11 @@
+void maintask::print()
+{
+	if (head == nullptr) { std::cout << "list is empty\n"; }
+	node* p = head;
+	while (p)
+	{
+		std::cout << p->val << " ";
+		p = p->next;
+	}
+	std::cout << '\n';
+}

@@ -5,6 +5,7 @@
 #include <ostream>
 #include <string>
 #include <algorithm>
+#include "logger.h"
 
 struct Node
 {
@@ -18,7 +19,9 @@ class mainTask
 	
 	Node* head;
 	Node* end;
+	logger W;
 	std::vector<std::pair<int, std::string>> result;
+	
 
 public:
 

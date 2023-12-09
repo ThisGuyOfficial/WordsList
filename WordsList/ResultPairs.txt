@@ -1,0 +1,17 @@
+1 empty
+1 if
+1 is
+1 list
+1 maintask
+1 next
+1 node
+1 nullptr
+1 print
+1 val
+1 void
+1 while
+2 head
+2 n
+3 cout
+3 std
+5 p

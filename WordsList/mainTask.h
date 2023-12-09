@@ -21,18 +21,20 @@ class mainTask
 	Node* end;
 	logger W;
 	std::vector<std::pair<int, std::string>> result;
-	
+	std::string pathtowl="WordsList.txt";
 
 public:
 
 	mainTask() : head(nullptr), end(nullptr) {}
 	bool empty() { return head == nullptr; }
 	void push_back(std::string&);
-	void read();
+	bool read();
 	void createList(std::vector<std::string>);
 	void countMatches();
-	void save();
-	
+	bool save();
+	bool changePath(std::string&);
+	std::string& getPath() { return pathtowl; }
+	std::string getLogPath() { return W.logFilePath(); }
 	~mainTask()
 	{
 		Node* current = head;

@@ -9,10 +9,10 @@ void mainTask::push_back(std::string& value)
 	end = p;
 }
 
-void mainTask::read()
+bool mainTask::read()
 {
 	W.log("Called  mainTask::read()");
-	std::ifstream in("WordsList.txt");
+	std::ifstream in(pathtowl);
 	char c;
 	int i = 0;
 	std::vector<std::string> storedWords;
@@ -38,11 +38,12 @@ void mainTask::read()
 	{
 		W.log("mainTask::read() exit with error: cannot open ifstream to WordsList.txt");
 		in.close();
-		return;
+		return false;
 	}
 	in.close();
 	W.log("mainTask::read() data sucessfully readed from file and parsed");
 	createList(storedWords);
+	return true;
 }
 
 void mainTask::createList(std::vector<std::string> storedWords)
@@ -90,10 +91,10 @@ void mainTask::countMatches()
 	W.log("mainTask::countMatches() elements sorted");
 }
 
-void mainTask::save()
+bool mainTask::save()
 {
 	W.log("Called mainTask::save");
-	if (result.empty()) { W.log("mainTask::save exit with error: no data to save"); return; }
+	if (result.empty()) { W.log("mainTask::save exit with error: no data to save"); return false; }
 	std::ofstream out;         
 	out.open("ResultPairs.txt");     
 	if (out.is_open())
@@ -101,8 +102,16 @@ void mainTask::save()
 		for (const std::pair<int, std::string>& a : result)
 			out << a.first << " " << a.second << '\n';
 	}
-	else { W.log("mainTask::save exit with error: cannot open oftream to ResultPairs.txt");}
+	else { W.log("mainTask::save exit with error: cannot open oftream to ResultPairs.txt"); out.close(); return false; }
 	W.log("mainTask::save all data sucessfully saved in file");
 	out.close();
 }
+
+bool mainTask::changePath(std::string& val)
+{
+	if (val.empty()) return false;
+	pathtowl = val + "\\WordsList.txt";
+	return true;
+}
+
 

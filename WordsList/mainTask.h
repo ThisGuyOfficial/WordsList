@@ -5,31 +5,34 @@
 #include <ostream>
 #include <string>
 #include <algorithm>
+#include <set>
 #include "logger.h"
 
 struct Node
 {
+	int ct;
 	std::string val;
 	Node* next;
-	Node(std::string& value) : val(value), next(nullptr) {}
+	Node(int count, std::string& value) : ct(count), val(value), next(nullptr) {}
 };
 
 class mainTask
 {
-	
+
 	Node* head;
 	Node* end;
 	logger W;
-	std::vector<std::pair<int, std::string>> result;
-	std::string pathtowl="WordsList.txt";
+	std::vector<std::string> storedWords;
+	std::vector<std::pair<int, std::string>>  result;
+	std::string pathtowl = "WordsList.txt";
 
 public:
 
 	mainTask() : head(nullptr), end(nullptr) {}
 	bool empty() { return head == nullptr; }
-	void push_back(std::string&);
+	void push_back(int,std::string&);
 	bool read();
-	void createList(std::vector<std::string>);
+	void createList();
 	void countMatches();
 	bool save();
 	bool changePath(std::string&);
@@ -45,7 +48,7 @@ public:
 			delete temp;
 		}
 	}
-	
-	
+
+
 };
 

@@ -1,1 +1,111 @@
-123
+#include "mainTask.h"
+
+void mainTask::push_back(int count, std::string& value)
+{
+	W.log("Called mainTask::push_back - adding new node to list with value "+value);
+	Node* p = new Node(count, value);
+	if (empty()) { head = p; end = p; return; }
+	end->next = p;
+	end = p;
+}
+
+bool mainTask::read()
+{
+	W.log("Called  mainTask::read()");
+	std::ifstream in(pathtowl);
+	char c;
+	int i = 0;
+	std::string res;
+	if (in.is_open()) {
+		while (in.good()) {
+			in.get(c);
+			if (c < 'A' || c>'Z')
+			{
+				if (i)
+				{
+					storedWords.push_back({ 1, res });
+					i = 0; 
+					res.clear();
+				}
+				continue;
+			}
+			res += c;
+			++i;
+		}
+	}
+	if (!in.eof() && in.fail())
+	{
+		W.log("mainTask::read() exit with error: cannot open ifstream to WordsList.txt");
+		in.close();
+		return false;
+	}
+	in.close();
+	W.log("mainTask::read() data sucessfully readed from file and parsed");
+	//std::sort(storedWords.begin(), storedWords.end());
+	return true;
+}
+
+void mainTask::createList()
+{
+	W.log("Called mainTask::createList");
+	if (storedWords.empty()) { W.log("mainTask::createList exit with error: cannot create list - load data from file first"); return; }
+	for (int i = 0; i < storedWords.size(); ++i)
+	{
+		push_back(storedWords[i].first, storedWords[i].second);
+	}
+	W.log("mainTask::createList list sucessfully created");
+}
+
+void mainTask::countMatches()
+{
+	W.log("Called function mainTask::countMatches()");
+	
+	std::sort(storedWords.begin(), storedWords.end(), [](const std::pair<int, std::string>& x, const std::pair<int, std::string>& y)
+		{
+			if (x.second != y.second) {return x.second < y.second;}return x.first < y.first;
+		});
+
+	//W.log("mainTask::countMatches() elements sorted by second value in pair");
+	
+	int count = storedWords.size()-1 ;
+
+	for (int i = 1; i < count; ++i)
+	{
+		if (storedWords[i].second == storedWords[i - 1].second)
+		{
+			storedWords[i-1].first++;
+			storedWords.erase(storedWords.begin() + i);
+			--count; --i;
+
+		}
+	}
+	W.log("mainTask::countMatches() duplicate elements counted and removed (all strings unique)");
+	//std::sort(result.begin(), result.end());
+	W.log("mainTask::countMatches() elements sorted");
+	createList();
+}
+
+bool mainTask::save()
+{
+	W.log("Called mainTask::save");
+	if (result.empty()) { W.log("mainTask::save exit with error: no data to save"); return false; }
+	std::ofstream out;         
+	out.open("ResultPairs.txt");     
+	if (out.is_open())
+	{
+		for (const std::pair<int, std::string>& a : result)
+			out << a.first << " " << a.second << '\n';
+	}
+	else { W.log("mainTask::save exit with error: cannot open oftream to ResultPairs.txt"); out.close(); return false; }
+	W.log("mainTask::save all data sucessfully saved in file");
+	out.close();
+}
+
+bool mainTask::changePath(std::string& val)
+{
+	if (val.empty()) return false;
+	pathtowl = val + "\\WordsList.txt";
+	return true;
+}
+
+

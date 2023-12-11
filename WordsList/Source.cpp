@@ -1,6 +1,7 @@
 #include "mainTask.h"
 #include <windows.h>
 #include <conio.h>
+#include <time.h>
 
 COORD GetConsoleCursorPosition(HANDLE hConsoleOutput)
 {
@@ -71,7 +72,6 @@ int main()
 		if (!n.save()) { std::cout << "Ошибка записи в файл! Детали операции сохранены в лог файл " << n.getLogPath() << '\n'; return 0; }
 		std::cout << "Данные успешно сохранены. Работа программы завершена.";
 		ret = true;
-
 	}
 	return 0;
 }

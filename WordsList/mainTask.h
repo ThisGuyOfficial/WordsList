@@ -16,15 +16,21 @@ struct Node
 	Node(int count, std::string& value) : ct(count), val(value), next(nullptr) {}
 };
 
+
 class mainTask
 {
 
 	Node* head;
 	Node* end;
 	logger W;
+
+	std::string allowedSymbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	std::string line;
 	std::vector<std::string> storedWords;
 	std::vector<std::pair<int, std::string>>  result;
 	std::string pathtowl = "WordsList.txt";
+
+	int mode = 0;
 
 public:
 
@@ -32,6 +38,8 @@ public:
 	bool empty() { return head == nullptr; }
 	void push_back(int,std::string&);
 	bool read();
+	void setMode(int a) { mode = a; }
+	int getMode() { return mode; }
 	void createList();
 	void countMatches();
 	bool save();

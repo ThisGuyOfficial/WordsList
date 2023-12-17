@@ -3,7 +3,7 @@
 
 Версия 1.0
 
-Работа над данной версиеййпрокта завершена, актуальная версия размещена по адресу https://github.com/ThisGuyOfficial/WordsListWinForms
+Работа над данной версией прокта завершена, актуальная версия размещена по адресу https://github.com/ThisGuyOfficial/WordsListWinForms
 
 
 
